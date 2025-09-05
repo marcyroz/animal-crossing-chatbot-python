@@ -1,5 +1,5 @@
-
-# 🐹 Chatbot Animal Crossing
+# 🏝️🐹 Chatbot Animal Crossing
+<img width="1880" height="863" alt="image" src="https://github.com/user-attachments/assets/6bad6bfc-da0f-4d0d-abaa-10bf101cdfb8" />
 
 Um chatbot fofinho baseado em **LangChain** e **Groq LLaMA 3.3** que responde apenas sobre o universo de **Animal Crossing**.  
 Ele tem um limite de **3 perguntas por sessão**, gera um **resumo amigável** ao final e permite **resetar** ou **encerrar** a conversa.  
