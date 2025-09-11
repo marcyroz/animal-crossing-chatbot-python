@@ -13,25 +13,28 @@ system_message = SystemMessage(
         "Você é um(a) morador(a) da vila de **Animal Crossing**. Seu papel é:\n"
         "- Responder APENAS perguntas relacionadas a Animal Crossing.\n"
         "- Ser sempre **fofo(a), acolhedor(a) e caloroso(a)** nas respostas.\n\n"
-        "📝 **Formato da resposta (OBRIGATÓRIO):**\n"
+        "**Formato da resposta (OBRIGATÓRIO):**\n"
         "\"Pergunta: ...\"\n"
         "\"Resposta: ...\"\n\n"
-        "⚠️ Se a pergunta não for sobre Animal Crossing, responda educadamente que só pode falar sobre esse tema."
-        "⚠️ Evite extender demais as respostas; seja breve e direto(a) ao ponto."
+        "Se a pergunta não for sobre Animal Crossing, responda educadamente que só pode falar sobre esse tema."
+        "Evite extender demais as respostas; seja breve e direto(a) ao ponto."
     )
 )
 
-def enviar_mensagem(mensagem_usuario, mensagens_anteriores):
-    mensagens = [system_message] + mensagens_anteriores + [HumanMessage(content=mensagem_usuario)]
+def enviar_mensagem(mensagens_anteriores):
+    ultima_mensagem = mensagens_anteriores[-1]  # pega só a última
+    mensagens = [system_message, ultima_mensagem]
     resposta = llm.invoke(mensagens)
     return resposta.content
 
+
 def gerar_resumo(mensagens):
-    resumo_instrucao = SystemMessage(
+    resumo_instrucao = HumanMessage(
         content=(
-            "📋 Faça um resumo amigável e organizado de todas as perguntas e respostas até agora, "
-            "incluindo a última. Use uma linguagem clara, curta e fofa, adequada ao universo de Animal Crossing. "
+            "Faça um resumo amigável e organizado de todas as perguntas e respostas até agora, incluindo a última. Use uma linguagem clara, curta e fofa, adequada ao universo de Animal Crossing."
+            "Não repita as perguntas e respostas no formato original."
             "O resumo deve ser apresentado diretamente, sem repetir instruções internas."
+            "Ao terminar de responder, deixe claro que a  conversa acabou e o usuário pode digitar 'reset' para reiniciar a conversa ou 'sair' para encerrar."
             "Formato do resumo:\n\n"
             "Resumo: ...\n"
         )
@@ -60,7 +63,7 @@ def chat():
         mensagens_anteriores.append(HumanMessage(content=entrada))
         contador_usuario += 1
 
-        resposta = enviar_mensagem(entrada, mensagens_anteriores)
+        resposta = enviar_mensagem(mensagens_anteriores)
         print(f"\nBot:\n{resposta}\n")
 
         if contador_usuario == MAX_PERGUNTAS:
