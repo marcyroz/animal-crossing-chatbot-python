@@ -1,4 +1,5 @@
 langchain-core
 groq
 langchain-community
+langchain-groq
 python-dotenv
